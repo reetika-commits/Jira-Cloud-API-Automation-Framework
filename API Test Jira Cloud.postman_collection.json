@@ -1,0 +1,476 @@
+{
+  "info": {
+    "_postman_id": "afcb3d95-d7c4-412b-ae57-e8e49ab7ab9a",
+    "name": "API Test Jira Cloud",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55678111"
+  },
+  "item": [
+    {
+      "name": "End to End API Testing",
+      "item": [
+        {
+          "name": "Create Issue Type Story in Existing Project",
+          "item": [
+            {
+              "name": "Get_Projects",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const responce =pm.response.json();\r",
+                      "const projectDetails = responce.find(val=> val.name==='Yatra QA Demo');\r",
+                      "pm.collectionVariables.set(\"ProjectID\", projectDetails.id);\r",
+                      "pm.collectionVariables.set(\"ProjectKEY\", projectDetails.key);\r",
+                      "//postman.setNextRequest(\"Get_Reporter_by_ ProjectKey\")"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "ATATT3xFfGF0W836VvftcLYlPPY9cIQuPbNr7mN2YbiZTyV8X-H2mv4m3hDTwM_wyEGxXLMnEik4T-lLI2LOoKvb864uztkU7vLpVCgSzn0LhFmNB3fV4nOB4W6OTMkn1pavijzwZ6_dXWvQvIpRFRArG16fn8ywjJoc4R9bXfYwmgL1MDUwW-o=0D17BC24",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{Jira_UserName}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{jira_Auto_URL}}/rest/api/3/project",
+                  "host": [
+                    "{{jira_Auto_URL}}"
+                  ],
+                  "path": [
+                    "rest",
+                    "api",
+                    "3",
+                    "project"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get_all_issueType_for Project",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const responce = pm.response.json();\r",
+                      "pm.collectionVariables.set('IssueID',responce.find(val=>val.name===pm.variables.get(\"IssueName\")).id);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "ATATT3xFfGF0W836VvftcLYlPPY9cIQuPbNr7mN2YbiZTyV8X-H2mv4m3hDTwM_wyEGxXLMnEik4T-lLI2LOoKvb864uztkU7vLpVCgSzn0LhFmNB3fV4nOB4W6OTMkn1pavijzwZ6_dXWvQvIpRFRArG16fn8ywjJoc4R9bXfYwmgL1MDUwW-o=0D17BC24",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{Jira_UserName}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{jira_Auto_URL}}/rest/api/3/issuetype/project?projectId={{ProjectID}}",
+                  "host": [
+                    "{{jira_Auto_URL}}"
+                  ],
+                  "path": [
+                    "rest",
+                    "api",
+                    "3",
+                    "issuetype",
+                    "project"
+                  ],
+                  "query": [
+                    {
+                      "key": "projectId",
+                      "value": "{{ProjectID}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get_Reporter_by_ ProjectKey",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const response=pm.response.json();\r",
+                      "const reporter= response.find(val=> val.displayName === \"QA.Engineer\");\r",
+                      "pm.collectionVariables.set('ReporterID',reporter.accountId)\r",
+                      "const assigne= response.find(val=> val.displayName === \"automation.engineer\");\r",
+                      "pm.collectionVariables.set('AssigneID',assigne.accountId)\r",
+                      "//postman.setNextRequest(\"Get_all_issueType_for Project\")"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "ATATT3xFfGF0W836VvftcLYlPPY9cIQuPbNr7mN2YbiZTyV8X-H2mv4m3hDTwM_wyEGxXLMnEik4T-lLI2LOoKvb864uztkU7vLpVCgSzn0LhFmNB3fV4nOB4W6OTMkn1pavijzwZ6_dXWvQvIpRFRArG16fn8ywjJoc4R9bXfYwmgL1MDUwW-o=0D17BC24",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{Jira_UserName}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{jira_Auto_URL}}/rest/api/3/user/assignable/search?project={{ProjectKEY}}",
+                  "host": [
+                    "{{jira_Auto_URL}}"
+                  ],
+                  "path": [
+                    "rest",
+                    "api",
+                    "3",
+                    "user",
+                    "assignable",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "project",
+                      "value": "{{ProjectKEY}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create_issue",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "pm.collectionVariables.set(\"issueSummary\", pm.variables.get(\"issueSummary\"));"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const response=pm.response.json()\r",
+                      "pm.collectionVariables.set(\"CreatedIssueID\", response.id)\r",
+                      "pm.collectionVariables.set(\"CreatedIssueKey\", response.key)\r",
+                      "pm.test(\"Status code is 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "ATATT3xFfGF0W836VvftcLYlPPY9cIQuPbNr7mN2YbiZTyV8X-H2mv4m3hDTwM_wyEGxXLMnEik4T-lLI2LOoKvb864uztkU7vLpVCgSzn0LhFmNB3fV4nOB4W6OTMkn1pavijzwZ6_dXWvQvIpRFRArG16fn8ywjJoc4R9bXfYwmgL1MDUwW-o=0D17BC24",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{Jira_UserName}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"fields\": {\r\n    \"issuetype\": {\r\n      \"id\": \"{{IssueID}}\"\r\n    },\r\n    \"labels\": [\r\n      \"bugfix\",\r\n      \"blitz_test\"\r\n    ],\r\n    \"project\": {\r\n      \"id\": \"{{ProjectID}}\"\r\n    },\r\n    \"reporter\": {\r\n      \"id\": \"{{ReporterID}}\"\r\n    },\r\n    \"summary\": \"{{issueSummary}}\"\r\n    },\r\n  \"update\": {}\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{jira_Auto_URL}}/rest/api/3/issue",
+                  "host": [
+                    "{{jira_Auto_URL}}"
+                  ],
+                  "path": [
+                    "rest",
+                    "api",
+                    "3",
+                    "issue"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Created Issue",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const response = pm.response.json();\r",
+                      "console.log(response.fields)\r",
+                      "pm.test(\"Summary match\", function () {\r",
+                      "   pm.expect(response.fields.summary).to.eql(pm.collectionVariables.get(\"issueSummary\"));\r",
+                      "    \r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "ATATT3xFfGF0W836VvftcLYlPPY9cIQuPbNr7mN2YbiZTyV8X-H2mv4m3hDTwM_wyEGxXLMnEik4T-lLI2LOoKvb864uztkU7vLpVCgSzn0LhFmNB3fV4nOB4W6OTMkn1pavijzwZ6_dXWvQvIpRFRArG16fn8ywjJoc4R9bXfYwmgL1MDUwW-o=0D17BC24",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{Jira_UserName}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{jira_Auto_URL}}/rest/api/3/issue/{{CreatedIssueID}}",
+                  "host": [
+                    "{{jira_Auto_URL}}"
+                  ],
+                  "path": [
+                    "rest",
+                    "api",
+                    "3",
+                    "issue",
+                    "{{CreatedIssueID}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Assign issue",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "ATATT3xFfGF0W836VvftcLYlPPY9cIQuPbNr7mN2YbiZTyV8X-H2mv4m3hDTwM_wyEGxXLMnEik4T-lLI2LOoKvb864uztkU7vLpVCgSzn0LhFmNB3fV4nOB4W6OTMkn1pavijzwZ6_dXWvQvIpRFRArG16fn8ywjJoc4R9bXfYwmgL1MDUwW-o=0D17BC24",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{Jira_UserName}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"accountId\": \"{{AssigneID}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{jira_Auto_URL}}/rest/api/3/issue/{{CreatedIssueKey}}/assignee",
+                  "host": [
+                    "{{jira_Auto_URL}}"
+                  ],
+                  "path": [
+                    "rest",
+                    "api",
+                    "3",
+                    "issue",
+                    "{{CreatedIssueKey}}",
+                    "assignee"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "auth": {
+            "type": "basic",
+            "basic": [
+              {
+                "key": "password",
+                "value": "ATATT3xFfGF0W836VvftcLYlPPY9cIQuPbNr7mN2YbiZTyV8X-H2mv4m3hDTwM_wyEGxXLMnEik4T-lLI2LOoKvb864uztkU7vLpVCgSzn0LhFmNB3fV4nOB4W6OTMkn1pavijzwZ6_dXWvQvIpRFRArG16fn8ywjJoc4R9bXfYwmgL1MDUwW-o=0D17BC24",
+                "type": "string"
+              },
+              {
+                "key": "username",
+                "value": "{{Jira_UserName}}",
+                "type": "string"
+              }
+            ]
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {},
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "ProjectID",
+      "value": ""
+    },
+    {
+      "key": "ProjectKEY",
+      "value": ""
+    },
+    {
+      "key": "BugID",
+      "value": ""
+    },
+    {
+      "key": "StoryID",
+      "value": ""
+    },
+    {
+      "key": "ReporterID",
+      "value": ""
+    },
+    {
+      "key": "issueSummary",
+      "value": ""
+    },
+    {
+      "key": "CreatedIssueID",
+      "value": ""
+    },
+    {
+      "key": "CreatedIssueKey",
+      "value": ""
+    },
+    {
+      "key": "AssigneID",
+      "value": ""
+    },
+    {
+      "key": "CreatedissueSummary",
+      "value": ""
+    },
+    {
+      "key": "IssueID",
+      "value": ""
+    },
+    {
+      "key": "IssueName",
+      "value": ""
+    }
+  ]
+}
